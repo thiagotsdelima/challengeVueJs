@@ -62,7 +62,6 @@ function exportXlsx() {
   XLSX.writeFile(wb, 'produtos-atualizados.xlsx')
 }
 
-// Métricas (exemplos)
 const countWithImage = computed(
   () => products.value.filter((p) => p.imageUrl?.trim()).length
 )
@@ -82,7 +81,6 @@ const avgScore = computed(() => {
     : '0.00'
 })
 
-// Edição simples inline
 function updateProduct(idx: number, patch: Partial<Product>) {
   products.value[idx] = { ...products.value[idx], ...patch }
 }
