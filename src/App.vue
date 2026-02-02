@@ -160,8 +160,8 @@ const filteredProducts = computed(() => {
       </thead>
       <tbody>
         <tr v-for="(p, idx) in filteredProducts" :key="p.id || idx">
-          <td class="border border-gray-300 p-2 max-w-2">
-            <input v-model="p.id" />
+          <td class="border border-gray-300 p-2 max-w-1">
+            <input v-model="p.id" type="number" min="0" max="5" />
           </td>
           <td class="border border-gray-300 p-2">
             <input v-model="p.name" />
@@ -218,7 +218,7 @@ const filteredProducts = computed(() => {
         <div class="price">R$ {{ p.price }}</div>
         <div class="rating">⭐ {{ p.rating }}</div>
         <div class="available" :class="{ 'text-red-700': !p.available }">
-          {{ p.available ? 'Disponível' : 'Indisponível' }}
+          {{ p.available ? 'Available' : 'Unavailable' }}
         </div>
         <div class="flex justify-center mt-2">
           <button
