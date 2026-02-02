@@ -220,9 +220,9 @@ const filteredProducts = computed(() => {
         <div class="available" :class="{ 'text-red-700': !p.available }">
           {{ p.available ? 'Available' : 'Unavailable' }}
         </div>
-        <div class="flex justify-center mt-2">
+        <div class="flex justify-center mt-2 flex-1">
           <button
-            class="items-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 cursor-pointer"
+            class="items-center bg-blue-500 text-white px-8 py-1 rounded hover:bg-blue-600 cursor-pointer"
             @click="updateProduct(idx, { available: !p.available })"
           >
             Alter Availability
