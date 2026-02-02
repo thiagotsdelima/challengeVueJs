@@ -203,7 +203,7 @@ const filteredProducts = computed(() => {
         :key="'g' + (p.id || idx)"
       >
         <img
-          class="w-full h-[140px] object-cover rounded-md"
+          class="w-full h-35 object-cover rounded-md"
           :src="p.imageUrl || '/img/placeholder.png'"
           :alt="p.name"
           @error="(e) => ((e.target as HTMLImageElement).src = '/img/placeholder.png')"
