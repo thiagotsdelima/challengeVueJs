@@ -216,7 +216,7 @@ const filteredProducts = computed(() => {
         />
         <div class="name">{{ p.name }}</div>
         <div class="price">R$ {{ p.price }}</div>
-        <div class="rating">⭐ {{ p.rating }}</div>
+        <div class="rating">⭐ {{ p.rating || 0 }}</div>
         <div class="available" :class="{ 'text-red-700': !p.available }">
           {{ p.available ? 'Available' : 'Unavailable' }}
         </div>
