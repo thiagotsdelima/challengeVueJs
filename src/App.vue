@@ -160,22 +160,28 @@ const filteredProducts = computed(() => {
       </thead>
       <tbody>
         <tr v-for="(p, idx) in filteredProducts" :key="p.id || idx">
-          <td class="border border-gray-300 p-2">
+          <td class="border border-gray-300 p-2 max-w-2">
             <input v-model="p.id" />
           </td>
           <td class="border border-gray-300 p-2">
             <input v-model="p.name" />
           </td>
-          <td class="border border-gray-300 p-2">
-            <input v-model.number="p.price" type="number" min="0" />
+          <td class="border border-gray-300 p-2 max-w-2">
+            <input
+              v-model.number="p.price"
+              type="number"
+              min="0"
+              max="15"
+              step="0.1"
+            />
           </td>
-          <td class="border border-gray-300 p-2">
+          <td class="border border-gray-300 p-1 w-6 text-center">
             <input type="checkbox" v-model="p.available" />
           </td>
           <td class="border border-gray-300 p-2">
-            <input v-model="p.imageUrl" />
+            <input v-model="p.imageUrl" class="w-full rounded p-1" />
           </td>
-          <td class="border border-gray-300 p-2">
+          <td class="border border-gray-300 p-1 w-6">
             <input
               v-model.number="p.rating"
               type="number"
@@ -184,7 +190,7 @@ const filteredProducts = computed(() => {
               step="0.1"
             />
           </td>
-          <td class="border border-gray-300 p-2">
+          <td class="border border-gray-300 p-2 text-center">
             <button
               class="text-red-500 cursor-pointer hover:text-red-600"
               @click="removeProduct(idx)"
@@ -214,12 +220,14 @@ const filteredProducts = computed(() => {
         <div class="available" :class="{ 'text-red-700': !p.available }">
           {{ p.available ? 'Disponível' : 'Indisponível' }}
         </div>
-        <button
-          class="mt-2 bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 cursor-pointer"
-          @click="updateProduct(idx, { available: !p.available })"
-        >
-          Alternar disponibilidade
-        </button>
+        <div class="flex justify-center mt-2">
+          <button
+            class="items-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 cursor-pointer"
+            @click="updateProduct(idx, { available: !p.available })"
+          >
+            Alternar disponibilidade
+          </button>
+        </div>
       </div>
     </div>
 
