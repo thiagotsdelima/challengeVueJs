@@ -59,7 +59,7 @@ function exportXlsx() {
   const ws = XLSX.utils.json_to_sheet(data, { skipHeader: false })
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws, sheetName.value)
-  XLSX.writeFile(wb, 'produtos-atualizados.xlsx')
+  XLSX.writeFile(wb, 'updated-products.xlsx')
 }
 
 const countWithImage = computed(
@@ -111,7 +111,7 @@ const filteredProducts = computed(() => {
         for="file-upload"
         class="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
-        Escolher arquivo
+        Choose file
       </label>
       <input
         id="file-upload"
@@ -126,23 +126,23 @@ const filteredProducts = computed(() => {
       <input
         v-model="searchQuery"
         type="text"
-        placeholder="Buscar por nome ou ID"
+        placeholder="Search per name or id..."
         class="border border-gray-300 rounded px-4 py-2 w-full"
       />
       <select
         v-model="filters.available"
         class="border border-gray-300 rounded px-4 py-2.5"
       >
-        <option :value="true">Disponíveis</option>
-        <option :value="false">Indisponíveis</option>
+        <option :value="true">Available</option>
+        <option :value="false">Unavailable</option>
       </select>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-      <div>Com imagem: {{ countWithImage }}</div>
-      <div>Indisponíveis: {{ countUnavailable }}</div>
+      <div>With image: {{ countWithImage }}</div>
+      <div>Unavailable: {{ countUnavailable }}</div>
       <div>OK: {{ countOk }}</div>
-      <div>Score médio: {{ avgScore }}</div>
+      <div>Score avarenge: {{ avgScore }}</div>
     </div>
 
     <table class="w-full border-collapse">
@@ -164,7 +164,7 @@ const filteredProducts = computed(() => {
             <input v-model="p.id" type="number" min="0" max="5" />
           </td>
           <td class="border border-gray-300 p-2">
-            <input v-model="p.name" />
+            <input v-model="p.name" class="w-full rounded p-1" />
           </td>
           <td class="border border-gray-300 p-2 max-w-2">
             <input
@@ -195,7 +195,7 @@ const filteredProducts = computed(() => {
               class="text-red-500 cursor-pointer hover:text-red-600"
               @click="removeProduct(idx)"
             >
-              Excluir
+              Delete
             </button>
           </td>
         </tr>
@@ -225,7 +225,7 @@ const filteredProducts = computed(() => {
             class="items-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 cursor-pointer"
             @click="updateProduct(idx, { available: !p.available })"
           >
-            Alternar disponibilidade
+            Alter Availability
           </button>
         </div>
       </div>
@@ -235,7 +235,7 @@ const filteredProducts = computed(() => {
       class="mt-4 cursor-pointer hover:bg-green-600 bg-green-500 text-white px-4 py-2 rounded"
       @click="exportXlsx"
     >
-      Baixar planilha
+      Download Spreadsheet
     </button>
   </div>
 </template>
