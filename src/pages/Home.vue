@@ -111,10 +111,10 @@ function rowToProduct(r: Product): Product {
   return {
     id: String(r.id ?? ''),
     name: String(r.name ?? ''),
-    price: Number(r.price ?? 0),
+    price: isNaN(Number(r.price)) ? 0 : Number(r.price),
     available: Boolean(r.available ?? false),
     imageUrl: String(r.imageUrl ?? ''),
-    rating: Number(r.rating ?? 0)
+    rating: isNaN(Number(r.rating)) ? 0 : Number(r.rating)
   }
 }
 
@@ -122,10 +122,10 @@ function productToRow(p: Product): Product {
   return {
     id: p.id,
     name: p.name,
-    price: p.price,
+    price: isNaN(Number(p.price)) ? 0 : Number(p.price),
     available: p.available,
     imageUrl: p.imageUrl,
-    rating: p.rating
+    rating: isNaN(Number(p.rating)) ? 0 : Number(p.rating)
   }
 }
 
