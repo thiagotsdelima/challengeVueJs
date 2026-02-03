@@ -122,27 +122,35 @@ const filteredProducts = computed(() => {
       />
     </div>
 
-    <div class="flex items-center gap-4 flex-1">
+    <div class="flex gap-4 flex-1">
       <input
         v-model="searchQuery"
         type="text"
         placeholder="Search per name or id..."
-        class="border border-gray-300 rounded px-4 py-2 w-full"
+        class="border border-gray-300 rounded px-4 py-2 sm:w-full w-72"
       />
       <select
         v-model="filters.available"
-        class="border border-gray-300 rounded px-4 py-2.5"
+        class="border border-gray-300 rounded px-4 py-2.5 max-w-32"
       >
         <option :value="true">Available</option>
         <option :value="false">Unavailable</option>
       </select>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-      <div>With image: {{ countWithImage }}</div>
-      <div>Unavailable: {{ countUnavailable }}</div>
-      <div>OK: {{ countOk }}</div>
-      <div>Score avarenge: {{ avgScore }}</div>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center items-center sm:mx-auto"
+    >
+      <div class="font-thin text-md sm:text-lg">
+        With image: {{ countWithImage }}
+      </div>
+      <div class="font-thin text-md sm:text-lg">
+        Unavailable: {{ countUnavailable }}
+      </div>
+      <div class="font-thin text-md sm:text-lg">OK: {{ countOk }}</div>
+      <div class="font-thin text-md sm:text-lg">
+        Score avarenge: {{ avgScore }}
+      </div>
     </div>
 
     <table class="w-full border-collapse">
