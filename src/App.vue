@@ -3,9 +3,7 @@ import * as XLSX from 'xlsx'
 import { ref, computed } from 'vue'
 
 const products = ref<Product[]>([])
-const itens = ref<Item[
-quantity: number; produtcs: Product
-]>([])
+const itens = ref<Item[]>([])
 const sheetName = ref('Produtos')
 const columnsOrder = ['id', 'name', 'price', 'available', 'imageUrl', 'rating']
 const searchQuery = ref('')
@@ -124,8 +122,8 @@ const filteredProducts = computed(() => {
 </script>
 
 <template>
-  <div class="grid gap-4 max-w-5xl mx-auto my-8 px-4">
-    <div>
+  <div class="grid max-w-5xl mx-auto my-8 px-4">
+    <div class="mb-4">
       <label
         for="file-upload"
         class="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -141,7 +139,12 @@ const filteredProducts = computed(() => {
       />
     </div>
 
-    <div class="flex gap-4 flex-1">
+    <div>
+      <label for="search" class="font-medium text-xs sm:text-lg"
+        >Search Products:</label
+      >
+    </div>
+    <div class="flex gap-4 flex-1 mb-4">
       <input
         v-model="searchQuery"
         type="text"
@@ -158,7 +161,7 @@ const filteredProducts = computed(() => {
     </div>
 
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center items-center sm:mx-auto"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center items-center sm:mx-auto mb-4"
     >
       <div class="font-thin text-md sm:text-lg">
         With image: {{ countWithImage }}
@@ -172,7 +175,10 @@ const filteredProducts = computed(() => {
       </div>
     </div>
 
-    <table class="w-full border-collapse sm:text-lg text-sm">
+    <div>
+      <label for="search" class="font-medium text-xs sm:text-lg">List:</label>
+    </div>
+    <table class="w-full border-collapse sm:text-lg text-sm mb-4">
       <thead>
         <tr>
           <th
@@ -229,6 +235,11 @@ const filteredProducts = computed(() => {
       </tbody>
     </table>
 
+    <div>
+      <label for="search" class="font-medium text-xs sm:text-lg"
+        >Gallery:</label
+      >
+    </div>
     <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3">
       <div
         class="border border-gray-200 p-2 rounded-lg"
