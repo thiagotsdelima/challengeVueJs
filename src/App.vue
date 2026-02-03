@@ -218,9 +218,8 @@ const filteredProducts = computed(() => {
       >
         <img
           class="w-full h-35 object-cover rounded-md"
-          :src="p.imageUrl || '/img/placeholder.png'"
+          :src="p.imageUrl"
           :alt="p.name"
-          @error="(e) => ((e.target as HTMLImageElement).src = '/img/placeholder.png')"
         />
         <div class="name">{{ p.name }}</div>
         <div class="price">R$ {{ p.price }}</div>
