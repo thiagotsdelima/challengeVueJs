@@ -3,6 +3,9 @@ import * as XLSX from 'xlsx'
 import { ref, computed } from 'vue'
 
 const products = ref<Product[]>([])
+const itens = ref<Item[
+quantity: number; produtcs: Product
+]>([])
 const sheetName = ref('Produtos')
 const columnsOrder = ['id', 'name', 'price', 'available', 'imageUrl', 'rating']
 const searchQuery = ref('')
@@ -80,6 +83,22 @@ const avgScore = computed(() => {
     ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(2)
     : '0.00'
 })
+
+function adjustItem(a: itens, b: itens) {
+  a.produtcs.name.localeCompare(b.produtcs.name)
+}
+
+function addProductRow(produtcs: Product): void {
+  const exitingItem = itens.find((i) => i.produtcs.id === produtcs.id) ?? {
+    product,
+    quantity: 0
+  }
+  const newItems = { ...exitingItem, quantity: exitingItem.quantity + 1 }
+  const itemWithoutItemSelected = itens.value.filter(
+    (i) => i.produtcs.id !== produtcs.id
+  )
+  itens.value = [...itemWithoutItemSelected, newItems].sort(adjustItem)
+}
 
 function updateProduct(idx: number, patch: Partial<Product>) {
   products.value[idx] = { ...products.value[idx], ...patch }
