@@ -1,7 +1,7 @@
 <template>
   <label
     :for="$attrs.for as string | undefined"
-    class="px-4 py-2 text-gray-800 rounded text-xs sm:text-lg font-thin"
+    class="text-gray-800 rounded text-xs sm:text-lg font-thin"
   >
     {{ label }}
   </label>

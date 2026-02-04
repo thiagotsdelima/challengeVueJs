@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-y-auto max-h-96">
+  <div class="overflow-y-auto max-h-192">
     <table class="w-full border-collapse sm:text-lg text-sm">
       <thead>
         <tr>
@@ -27,7 +27,7 @@
               type="number"
               min="0"
               max="100"
-              step="0.1"
+              step="0.01"
             />
           </td>
           <td class="border border-gray-300 p-1 w-6 text-center">

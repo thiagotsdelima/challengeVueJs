@@ -4,17 +4,22 @@
     v-for="(p, idx) in filteredProducts"
     :key="'g' + (p.id || idx)"
   >
-    <img
-      class="w-full h-35 object-cover rounded-md"
-      :src="p.imageUrl"
-      :alt="p.name"
-    />
-    <div class="name">{{ p.name }}</div>
-    <div class="price">R$ {{ p.price }}</div>
-    <div class="rating">⭐ {{ p.rating || 0 }}</div>
-    <div class="available" :class="{ 'text-red-700': !p.available }">
-      {{ p.available ? 'Available' : 'Unavailable' }}
-    </div>
+    <router-link
+      :to="`/edit/${p.id}`"
+      class="block hover:shadow-lg transition-shadow duration-300"
+    >
+      <img
+        class="w-full h-35 object-cover rounded-md"
+        :src="p.imageUrl"
+        :alt="p.name"
+      />
+      <div class="name">{{ p.name }}</div>
+      <div class="price">R$ {{ p.price }}</div>
+      <div class="rating">⭐ {{ p.rating || 0 }}</div>
+      <div class="available" :class="{ 'text-red-700': !p.available }">
+        {{ p.available ? 'Available' : 'Unavailable' }}
+      </div>
+    </router-link>
     <div class="flex justify-center mt-2 flex-1">
       <Button
         color="blue"

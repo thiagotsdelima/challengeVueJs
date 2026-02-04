@@ -38,11 +38,11 @@
 
     <div class="flex justify-end items-end">
       <Button
-        :disabled="filteredProducts.length === 0"
         label="Add New Product"
         color="blue"
         type="normal"
         class="max-w-48"
+        @click="() => router.push('/create')"
       />
     </div>
 
@@ -85,7 +85,7 @@
         value="tab2"
       >
         <div
-          class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 overflow-y-auto max-h-192"
+          class="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3"
         >
           <Galery
             :filteredProducts="filteredProducts"
@@ -94,29 +94,6 @@
         </div>
       </TabsContent>
     </TabsRoot>
-
-    <!-- <Label label="List:" />
-    <div v-if="filteredProducts.length > 0" class="mb-4">
-      <Table
-        :removeProduct="removeProduct"
-        :filteredProducts="filteredProducts"
-      />
-    </div>
-    <div v-else>
-      <ListEmpty />
-    </div>
-
-    <div v-if="filteredProducts.length > 0">
-      <Label label="Gallery:" />
-    </div>
-    <div
-      class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 overflow-y-auto max-h-192"
-    >
-      <Galery
-        :filteredProducts="filteredProducts"
-        :updateProduct="updateProduct"
-      />
-    </div> -->
 
     <div class="mt-4">
       <Button
@@ -134,6 +111,7 @@
 import * as XLSX from 'xlsx'
 import { ref, computed } from 'vue'
 import Button from '@/components/Button.vue'
+import { Product, updateProduct, products } from '@/utils/store'
 import Label from '@/components/Label.vue'
 import Input from '@/components/Input.vue'
 import OptionSelected from '@/components/OptionSelected.vue'
@@ -148,22 +126,14 @@ import {
   TabsRoot,
   TabsTrigger
 } from 'radix-vue'
+import { useRouter } from 'vue-router'
 
-const products = ref<Product[]>([])
+const router = useRouter()
 const sheetName = ref('Produtos')
 const searchQuery = ref('')
 const filters = ref({
   available: null
 })
-
-type Product = {
-  id: string
-  name: string
-  price: number
-  available: boolean
-  imageUrl: string
-  rating: number
-}
 
 const countWithImage = computed(
   () => products.value.filter((p) => p.imageUrl?.trim()).length
@@ -238,10 +208,6 @@ const filteredProducts = computed(() => {
     return search && availability
   })
 })
-
-function updateProduct(idx: number, patch: Partial<Product>) {
-  products.value[idx] = { ...products.value[idx], ...patch }
-}
 
 function removeProduct(idx: number) {
   products.value.splice(idx, 1)

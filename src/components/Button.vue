@@ -3,7 +3,10 @@
     :class="[
       'px-4 py-2 rounded text-xs sm:text-lg font-thin hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex flex-1 w-full items-center justify-center gap-2 cursor-pointer',
       colorClass,
-      { 'inline-block': type === 'inline', block: type === 'normal' }
+      {
+        'inline-block': defaultButton === 'inline',
+        block: defaultButton === 'normal'
+      }
     ]"
     :disabled="disabled"
     @click="onClick"
@@ -22,7 +25,7 @@ const props = defineProps<{
   label: string
   icon?: string | object
   color?: 'blue' | 'red' | 'green' | 'gray'
-  type?: 'inline' | 'normal'
+  defaultButton?: 'inline' | 'normal'
   disabled?: boolean
   onClick?: () => void
 }>()
