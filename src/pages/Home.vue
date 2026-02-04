@@ -4,7 +4,7 @@
       <Label
         label="Choose file"
         for="file-upload"
-        class="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        class="cursor-pointer bg-blue-600 text-white px-9 py-2 rounded hover:bg-blue-700"
       />
       <Input
         id="file-upload"
@@ -36,22 +36,91 @@
       />
     </div>
 
-    <Label label="List:" />
-    <Table
-      :removeProduct="removeProduct"
-      :filteredProducts="filteredProducts"
-    />
+    <div class="flex justify-end items-end">
+      <Button
+        :disabled="filteredProducts.length === 0"
+        label="Add New Product"
+        color="blue"
+        type="normal"
+        class="max-w-48"
+      />
+    </div>
 
-    <Label label="Gallery:" />
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3">
+    <TabsRoot default-value="tab1">
+      <TabsList class="relative shrink-0 flex">
+        <TabsIndicator
+          class="absolute left-0 h-1 bottom-0 bg-blue-600 rounded-full transition-[width,transform] duration-300"
+          style="
+            width: var(--radix-tabs-indicator-size);
+            transform: translateX(var(--radix-tabs-indicator-position));
+          "
+        />
+
+        <TabsTrigger
+          value="tab1"
+          class="flex-1 text-center px-4 py-2 sm:px-6 sm:py-3"
+        >
+          <Label label="List" />
+        </TabsTrigger>
+        <TabsTrigger
+          value="tab2"
+          class="flex-1 text-center px-4 py-2 sm:px-6 sm:py-3"
+        >
+          <Label label="Gallery" />
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="tab1">
+        <div v-if="filteredProducts.length > 0" class="mb-4 mt-4">
+          <Table
+            :removeProduct="removeProduct"
+            :filteredProducts="filteredProducts"
+          />
+        </div>
+        <div v-else>
+          <ListEmpty />
+        </div>
+      </TabsContent>
+      <TabsContent
+        class="grow p-5 bg-white rounded-b-md outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+        value="tab2"
+      >
+        <div
+          class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 overflow-y-auto max-h-192"
+        >
+          <Galery
+            :filteredProducts="filteredProducts"
+            :updateProduct="updateProduct"
+          />
+        </div>
+      </TabsContent>
+    </TabsRoot>
+
+    <!-- <Label label="List:" />
+    <div v-if="filteredProducts.length > 0" class="mb-4">
+      <Table
+        :removeProduct="removeProduct"
+        :filteredProducts="filteredProducts"
+      />
+    </div>
+    <div v-else>
+      <ListEmpty />
+    </div>
+
+    <div v-if="filteredProducts.length > 0">
+      <Label label="Gallery:" />
+    </div>
+    <div
+      class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 overflow-y-auto max-h-192"
+    >
       <Galery
         :filteredProducts="filteredProducts"
         :updateProduct="updateProduct"
       />
-    </div>
+    </div> -->
 
     <div class="mt-4">
       <Button
+        :disabled="filteredProducts.length === 0"
         label="Download Spreadsheet"
         color="green"
         type="normal"
@@ -71,6 +140,14 @@ import OptionSelected from '@/components/OptionSelected.vue'
 import Metrics from '@/components/Metrics.vue'
 import Table from '@/components/Table.vue'
 import Galery from '@/components/Gallery.vue'
+import ListEmpty from '@/components/ListEmpty.vue'
+import {
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsRoot,
+  TabsTrigger
+} from 'radix-vue'
 
 const products = ref<Product[]>([])
 const sheetName = ref('Produtos')
@@ -101,10 +178,10 @@ const countOk = computed(
     ).length
 )
 const avgScore = computed(() => {
-  const arr = products.value.map((p) => p.rating).filter((n) => !isNaN(n))
-  return arr.length
-    ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(2)
-    : '0.00'
+  const result = products.value.map((p) => p.rating)
+  return result.length
+    ? (result.reduce((a, b) => a + b, 0) / result.length).toFixed(2)
+    : '0.0'
 })
 
 function rowToProduct(r: Product): Product {
@@ -143,9 +220,7 @@ async function onFileChange(e: Event) {
   if (!file) return
   const buf = await file.arrayBuffer()
   const wb = XLSX.read(buf, { type: 'array' })
-  const name = wb.SheetNames[0]
-  sheetName.value = name
-  const ws = wb.Sheets[name]
+  const ws = wb.Sheets[wb.SheetNames[0]]
   const rows = XLSX.utils.sheet_to_json(ws, { defval: '', raw: true }) as any[]
   products.value = rows.map(rowToProduct)
 }

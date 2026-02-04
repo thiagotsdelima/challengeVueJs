@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[
-      'px-4 py-2 rounded hover:opacity-90 disabled:opacity-50 flex flex-1 w-full items-center justify-center gap-2 cursor-pointer',
+      'px-4 py-2 rounded text-xs sm:text-lg font-thin hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex flex-1 w-full items-center justify-center gap-2 cursor-pointer',
       colorClass,
       { 'inline-block': type === 'inline', block: type === 'normal' }
     ]"
@@ -30,13 +30,21 @@ const props = defineProps<{
 const colorClass = computed(() => {
   switch (props.color) {
     case 'red':
-      return 'bg-red-600 text-white hover:bg-red-700'
+      return props.disabled
+        ? 'bg-red-400 text-white'
+        : 'bg-red-600 text-white hover:bg-red-700'
     case 'green':
-      return 'bg-green-600 text-white hover:bg-green-700'
+      return props.disabled
+        ? 'bg-green-400 text-white'
+        : 'bg-green-600 text-white hover:bg-green-700'
     case 'gray':
-      return 'bg-gray-600 text-white hover:bg-gray-700'
+      return props.disabled
+        ? 'bg-gray-400 text-white'
+        : 'bg-gray-600 text-white hover:bg-gray-700'
     default:
-      return 'bg-blue-600 text-white hover:bg-blue-700'
+      return props.disabled
+        ? 'bg-blue-400 text-white'
+        : 'bg-blue-600 text-white hover:bg-blue-700'
   }
 })
 </script>
