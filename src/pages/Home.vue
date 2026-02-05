@@ -30,7 +30,7 @@
     >
       <Metrics
         :countWithImage="countWithImage"
-        :countUnavailable="countUnavailable"
+        :countUnstatus="countUnstatus"
         :countOk="countOk"
         :avgScore="avgScore"
       />
@@ -87,10 +87,7 @@
         <div
           class="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3"
         >
-          <Galery
-            :filteredProducts="filteredProducts"
-            :updateProduct="updateProduct"
-          />
+          <Galery :filteredProducts="filteredProducts" />
         </div>
       </TabsContent>
     </TabsRoot>
@@ -111,10 +108,9 @@
 import * as XLSX from 'xlsx'
 import { ref, computed } from 'vue'
 import Button from '@/components/Button.vue'
-import { Product, updateProduct, products } from '@/utils/store'
+import { Product, products } from '@/utils/store'
 import Label from '@/components/Label.vue'
 import Input from '@/components/Input.vue'
-import OptionSelected from '@/components/OptionSelected.vue'
 import Metrics from '@/components/Metrics.vue'
 import Table from '@/components/Table.vue'
 import Galery from '@/components/Gallery.vue'
@@ -132,23 +128,23 @@ const router = useRouter()
 const sheetName = ref('Produtos')
 const searchQuery = ref('')
 const filters = ref({
-  available: null
+  status: null
 })
 
 const countWithImage = computed(
-  () => products.value.filter((p) => p.imageUrl?.trim()).length
+  () => products.value.filter((p) => p.BB_Image_Url?.trim()).length
 )
-const countUnavailable = computed(
-  () => products.value.filter((p) => !p.available).length
+const countUnstatus = computed(
+  () => products.value.filter((p) => !p.Status).length
 )
 const countOk = computed(
   () =>
     products.value.filter(
-      (p) => p.available && p.name && p.price > 0 && p.imageUrl?.trim()
+      (p) => p.Status && p.Name && p.EAN > 0 && p.BB_Image_Url?.trim()
     ).length
 )
 const avgScore = computed(() => {
-  const result = products.value.map((p) => p.rating)
+  const result = products.value.map((p) => p.Score)
   return result.length
     ? (result.reduce((a, b) => a + b, 0) / result.length).toFixed(2)
     : '0.0'
@@ -156,23 +152,25 @@ const avgScore = computed(() => {
 
 function rowToProduct(r: Product): Product {
   return {
-    id: String(r.id ?? ''),
-    name: String(r.name ?? ''),
-    price: isNaN(Number(r.price)) ? 0 : Number(r.price),
-    available: Boolean(r.available ?? false),
-    imageUrl: String(r.imageUrl ?? ''),
-    rating: isNaN(Number(r.rating)) ? 0 : Number(r.rating)
+    ID: String(r.ID ?? ''),
+    EAN: isNaN(Number(r.EAN)) ? 0 : Number(r.EAN),
+    Name: String(r.Name ?? ''),
+    Status: String(r.Status ?? false),
+    Score: isNaN(Number(r.Score)) ? 0 : Number(r.Score),
+    Mirakl_Image: String(r.Mirakl_Image ?? ''),
+    BB_Image_Url: String(r.BB_Image_Url ?? '')
   }
 }
 
 function productToRow(p: Product): Product {
   return {
-    id: p.id,
-    name: p.name,
-    price: isNaN(Number(p.price)) ? 0 : Number(p.price),
-    available: p.available,
-    imageUrl: p.imageUrl,
-    rating: isNaN(Number(p.rating)) ? 0 : Number(p.rating)
+    ID: p.ID,
+    EAN: p.EAN,
+    Name: p.Name,
+    Status: p.Status,
+    Score: p.Score,
+    Mirakl_Image: p.Mirakl_Image,
+    BB_Image_Url: p.BB_Image_Url
   }
 }
 
@@ -198,14 +196,10 @@ async function onFileChange(e: Event) {
 const filteredProducts = computed(() => {
   return products.value.filter((product) => {
     const search =
-      product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      product.id.toLowerCase().includes(searchQuery.value.toLowerCase())
+      product.Name?.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      product.ID?.toLowerCase().includes(searchQuery.value.toLowerCase())
 
-    const availability =
-      filters.value.available === null ||
-      product.available === filters.value.available
-
-    return search && availability
+    return search
   })
 })
 

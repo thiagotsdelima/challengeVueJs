@@ -1,22 +1,23 @@
 import { ref } from 'vue'
 
 export type Product = {
-  id: string
-  name: string
-  price: number
-  available: boolean
-  imageUrl: string
-  rating: number
+  ID?: string
+  EAN: number
+  Name?: string
+  Status?: string
+  Score: number
+  Mirakl_Image?: string
+  BB_Image_Url?: string
 }
 
 export const products = ref<Product[]>([])
 
-function adjustItem(a: Product, b: Product) {
-  return a.name.localeCompare(b.name)
+function adjustItem(a: Product, b: Product): number {
+  return a.Name?.localeCompare(b.Name!) ?? 0
 }
 
 export function addProductRow(product: Product): void {
-  const existingItem = products.value.find((p) => p.id === product.id)
+  const existingItem = products.value.find((p) => p.ID === product.ID)
 
   if (!existingItem) {
     products.value = [...products.value, product].sort(adjustItem)

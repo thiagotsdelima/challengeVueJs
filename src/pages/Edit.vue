@@ -13,52 +13,55 @@
       <Label label="Image URL:" />
       <div class="mb-4">
         <input
-          v-model="product.imageUrl"
+          v-model="product.BB_Image_Url"
           type="text"
           class="w-full border border-gray-300 p-2 rounded mt-1"
-          placeholder="Enter image URL"
+          placeholder="image URL"
+        />
+      </div>
+      <Label label="Mirakl Image:" />
+      <div class="mb-4">
+        <input
+          v-model="product.Mirakl_Image"
+          type="text"
+          class="w-full border border-gray-300 p-2 rounded mt-1"
+          placeholder="image URL"
         />
       </div>
       <div class="flex gap-4 mb-4">
         <div class="flex-1">
           <Label label="Name:" />
           <input
-            v-model="product.name"
+            v-model="product.Name"
             type="text"
             class="w-full border border-gray-300 p-2 rounded mt-1"
-            placeholder="Enter product name"
+            placeholder="product name"
           />
         </div>
 
         <div class="w-1/4">
-          <Label label="Price:" />
+          <Label label="Status:" />
           <input
-            v-model.number="product.price"
-            type="number"
+            v-model.number="product.Status"
+            type="string"
             class="w-full border border-gray-300 p-2 rounded mt-1"
-            placeholder="Enter product price"
+            placeholder="product Status"
             step="0.01"
           />
         </div>
 
         <div class="w-1/6">
-          <Label label="Rating:" />
+          <Label label="Score:" />
           <input
-            v-model.number="product.rating"
+            v-model.number="product.Score"
             type="number"
             class="w-full border border-gray-300 p-2 rounded mt-1"
-            placeholder="Enter product rating"
+            placeholder="product Score"
             min="0"
             max="10"
             step="0.1"
           />
         </div>
-      </div>
-
-      <Label label="Available:" />
-      <div class="mb-4">
-        <input v-model="product.available" type="checkbox" class="mr-2" />
-        <span>Is Available</span>
       </div>
 
       <div class="flex gap-3 justify-end">
@@ -84,7 +87,7 @@ const router = useRouter()
 const route = useRoute()
 
 const productId = route.params.id as string
-const productIndex = products.value.findIndex((p) => p.id === productId)
+const productIndex = products.value.findIndex((p) => p.ID === productId)
 
 const product = ref({ ...products.value[productIndex] })
 
