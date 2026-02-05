@@ -135,12 +135,15 @@ const countWithImage = computed(
   () => products.value.filter((p) => p.BB_Image_Url?.trim()).length
 )
 const countUnstatus = computed(
-  () => products.value.filter((p) => !p.Status).length
+  () =>
+    products.value.filter(
+      (p) => p.Status === 'INDISPONIVEL' || p.Status === 'ERRO'
+    ).length
 )
 const countOk = computed(
   () =>
     products.value.filter(
-      (p) => p.Status && p.Name && p.EAN > 0 && p.BB_Image_Url?.trim()
+      (p) => p.Status === 'OK' && p.Name && p.EAN > 0 && p.BB_Image_Url?.trim()
     ).length
 )
 const avgScore = computed(() => {
