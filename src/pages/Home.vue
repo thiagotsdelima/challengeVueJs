@@ -85,7 +85,7 @@
         value="tab2"
       >
         <div
-          class="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3"
+          class="grid grid-cols-[repeat(auto-fill,minmax(185px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3"
         >
           <Galery :filteredProducts="filteredProducts" />
         </div>
