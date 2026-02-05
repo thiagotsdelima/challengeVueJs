@@ -6,13 +6,11 @@
           <th
             v-for="col in columnsOrder"
             :key="col"
-            class="border border-gray-300 p-2 text-[10px] sm:text-lg hidden sm:table-cell"
+            class="border border-gray-300 p-0 sm:p-2 text-[10px] sm:text-lg"
           >
             {{ col }}
           </th>
-          <th
-            class="border border-gray-300 p-2 text-xs sm:text-md hidden sm:table-cell"
-          >
+          <th class="border border-gray-300 p-0 sm:p-2 text-xs sm:text-md">
             Ações
           </th>
         </tr>

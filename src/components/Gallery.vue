@@ -12,9 +12,7 @@
     />
     <div class="name">{{ p.Name }}</div>
     <div class="score">⭐ {{ p.Score || 0 }}</div>
-    <div class="Status" :class="{ 'text-red-700': !p.Status }">
-      {{ p.Status ? 'Status' : 'Unstatus' }}
-    </div>
+    <div class="Status">{{ p.Status }}</div>
   </router-link>
 </template>
 
